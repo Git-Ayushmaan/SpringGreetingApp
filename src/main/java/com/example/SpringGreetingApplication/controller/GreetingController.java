@@ -11,38 +11,39 @@ public class GreetingController {
 
     private final GreetingService greetingService;
 
-    // Constructor Injection
     public GreetingController(GreetingService greetingService) {
         this.greetingService = greetingService;
     }
 
-    // GET method to return a greeting message
+    // GET method to return a personalized greeting
     @GetMapping
-    public Map<String, String> getGreet() {
-        return greetingService.getGreeting("GET");
+    public Map<String, String> getGreet(
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName) {
+        return greetingService.getPersonalizedGreeting(firstName, lastName);
     }
 
-    // POST method to return a greeting message
+    // POST method for a personalized greeting
     @PostMapping
-    public Map<String, String> postGreet() {
-        return greetingService.getGreeting("POST");
+    public Map<String, String> postGreet(
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName) {
+        return greetingService.getPersonalizedGreeting(firstName, lastName);
     }
 
-    // PUT method to return a greeting message
+    // PUT method for a personalized greeting
     @PutMapping
-    public Map<String, String> putGreet() {
-        return greetingService.getGreeting("PUT");
+    public Map<String, String> putGreet(
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName) {
+        return greetingService.getPersonalizedGreeting(firstName, lastName);
     }
 
-    // DELETE method to return a greeting message
+    // DELETE method for a personalized greeting
     @DeleteMapping
-    public Map<String, String> deleteGreet() {
-        return greetingService.getGreeting("DELETE");
-    }
-
-    // New endpoint for simple greeting "Hello World"
-    @GetMapping("/simple")
-    public Map<String, String> getSimpleGreeting() {
-        return greetingService.getSimpleGreeting();
+    public Map<String, String> deleteGreet(
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName) {
+        return greetingService.getPersonalizedGreeting(firstName, lastName);
     }
 }
