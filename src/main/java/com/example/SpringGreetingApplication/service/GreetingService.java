@@ -68,4 +68,23 @@ public class GreetingService {
 
         return response;
     }
+
+    // Update an existing greeting message
+    public Map<String, String> updateGreeting(Long id, String newMessage) {
+        Map<String, String> response = new HashMap<>();
+        Optional<GreetingEntity> existingGreeting = greetingRepository.findById(id);
+
+        if (existingGreeting.isPresent()) {
+            GreetingEntity greeting = existingGreeting.get();
+            greeting.setMessage(newMessage);
+            greetingRepository.save(greeting);
+
+            response.put("id", String.valueOf(greeting.getId()));
+            response.put("message", greeting.getMessage());
+        } else {
+            response.put("error", "Greeting not found!");
+        }
+
+        return response;
+    }
 }
