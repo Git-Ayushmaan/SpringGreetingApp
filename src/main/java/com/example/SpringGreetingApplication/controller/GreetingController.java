@@ -1,47 +1,48 @@
 package com.example.SpringGreetingApplication.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.SpringGreetingApplication.service.GreetingService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/greet")
 public class GreetingController {
-    // mapes into object
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    // get method to return json
+    private final GreetingService greetingService;
+
+    // Constructor Injection
+    public GreetingController(GreetingService greetingService) {
+        this.greetingService = greetingService;
+    }
+
+    // GET method to return a greeting message
     @GetMapping
-    public String getGreet() throws JsonProcessingException {
-        Map<String, String> map = new HashMap<>();
-        map.put("message", "Hello from get method");
-        return objectMapper.writeValueAsString(map); // converts into json
+    public Map<String, String> getGreet() {
+        return greetingService.getGreeting("GET");
     }
 
-    // post method to return json
+    // POST method to return a greeting message
     @PostMapping
-    public String postGreet() throws JsonProcessingException {
-        Map<String, String> map = new HashMap<>();
-        map.put("message", "Hello from post method");
-        return objectMapper.writeValueAsString(map);
+    public Map<String, String> postGreet() {
+        return greetingService.getGreeting("POST");
     }
 
-    // put method to return json
+    // PUT method to return a greeting message
     @PutMapping
-    public String putGreet() throws JsonProcessingException {
-        Map<String, String> map = new HashMap<>();
-        map.put("message", "Hello from put method");
-        return objectMapper.writeValueAsString(map);
+    public Map<String, String> putGreet() {
+        return greetingService.getGreeting("PUT");
     }
 
-    // delete method to return json
+    // DELETE method to return a greeting message
     @DeleteMapping
-    public String deleteGreet() throws JsonProcessingException {
-        Map<String, String> map = new HashMap<>();
-        map.put("message", "Hello from delete method");
-        return objectMapper.writeValueAsString(map);
+    public Map<String, String> deleteGreet() {
+        return greetingService.getGreeting("DELETE");
+    }
+
+    // New endpoint for simple greeting "Hello World"
+    @GetMapping("/simple")
+    public Map<String, String> getSimpleGreeting() {
+        return greetingService.getSimpleGreeting();
     }
 }
