@@ -3,6 +3,7 @@ package com.example.SpringGreetingApplication.controller;
 import com.example.SpringGreetingApplication.service.GreetingService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -27,5 +28,11 @@ public class GreetingController {
     @GetMapping("/{id}")
     public Map<String, String> getGreetById(@PathVariable Long id) {
         return greetingService.getGreetingById(id);
+    }
+
+    // Retrieve all stored greetings
+    @GetMapping("/all")
+    public List<Map<String, String>> getAllGreetings() {
+        return greetingService.getAllGreetings();
     }
 }

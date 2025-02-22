@@ -4,9 +4,7 @@ import com.example.SpringGreetingApplication.model.GreetingEntity;
 import com.example.SpringGreetingApplication.repository.GreetingRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class GreetingService {
@@ -51,6 +49,21 @@ public class GreetingService {
             response.put("message", greeting.get().getMessage());
         } else {
             response.put("error", "Greeting not found!");
+        }
+
+        return response;
+    }
+
+    // Retrieve all stored greetings
+    public List<Map<String, String>> getAllGreetings() {
+        List<GreetingEntity> greetings = greetingRepository.findAll();
+        List<Map<String, String>> response = new ArrayList<>();
+
+        for (GreetingEntity greeting : greetings) {
+            Map<String, String> greetingMap = new HashMap<>();
+            greetingMap.put("id", String.valueOf(greeting.getId()));
+            greetingMap.put("message", greeting.getMessage());
+            response.add(greetingMap);
         }
 
         return response;
