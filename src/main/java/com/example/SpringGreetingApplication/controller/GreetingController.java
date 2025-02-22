@@ -15,7 +15,7 @@ public class GreetingController {
         this.greetingService = greetingService;
     }
 
-    // GET method to return a personalized greeting
+    // GET request to generate and save a greeting
     @GetMapping
     public Map<String, String> getGreet(
             @RequestParam(required = false) String firstName,
@@ -23,27 +23,9 @@ public class GreetingController {
         return greetingService.getPersonalizedGreeting(firstName, lastName);
     }
 
-    // POST method for a personalized greeting
-    @PostMapping
-    public Map<String, String> postGreet(
-            @RequestParam(required = false) String firstName,
-            @RequestParam(required = false) String lastName) {
-        return greetingService.getPersonalizedGreeting(firstName, lastName);
-    }
-
-    // PUT method for a personalized greeting
-    @PutMapping
-    public Map<String, String> putGreet(
-            @RequestParam(required = false) String firstName,
-            @RequestParam(required = false) String lastName) {
-        return greetingService.getPersonalizedGreeting(firstName, lastName);
-    }
-
-    // DELETE method for a personalized greeting
-    @DeleteMapping
-    public Map<String, String> deleteGreet(
-            @RequestParam(required = false) String firstName,
-            @RequestParam(required = false) String lastName) {
-        return greetingService.getPersonalizedGreeting(firstName, lastName);
+    // Retrieve a greeting by ID
+    @GetMapping("/{id}")
+    public Map<String, String> getGreetById(@PathVariable Long id) {
+        return greetingService.getGreetingById(id);
     }
 }
