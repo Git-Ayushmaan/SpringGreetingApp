@@ -15,7 +15,7 @@ public class GreetingController {
         this.greetingService = greetingService;
     }
 
-    // GET request to generate and save a greeting
+    // Generate and save a greeting
     @GetMapping
     public Map<String, String> getGreet(
             @RequestParam(required = false) String firstName,

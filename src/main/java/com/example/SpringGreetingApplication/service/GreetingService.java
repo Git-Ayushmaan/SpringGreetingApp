@@ -17,7 +17,7 @@ public class GreetingService {
         this.greetingRepository = greetingRepository;
     }
 
-    // Generate a personalized greeting and save it to the database
+    // Generate a greeting, save it to the database, and return it
     public Map<String, String> getPersonalizedGreeting(String firstName, String lastName) {
         Map<String, String> response = new HashMap<>();
         String message;
@@ -32,10 +32,11 @@ public class GreetingService {
             message = "Hello World";
         }
 
-        // Save to database
+        // Save message to database
         GreetingEntity greetingEntity = new GreetingEntity(message);
-        greetingRepository.save(greetingEntity);
+        GreetingEntity savedGreeting = greetingRepository.save(greetingEntity);
 
+        response.put("id", String.valueOf(savedGreeting.getId())); // Return the saved ID
         response.put("message", message);
         return response;
     }
@@ -46,6 +47,7 @@ public class GreetingService {
         Optional<GreetingEntity> greeting = greetingRepository.findById(id);
 
         if (greeting.isPresent()) {
+            response.put("id", String.valueOf(greeting.get().getId()));
             response.put("message", greeting.get().getMessage());
         } else {
             response.put("error", "Greeting not found!");
