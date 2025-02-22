@@ -87,4 +87,19 @@ public class GreetingService {
 
         return response;
     }
+
+    // Delete a greeting message by ID
+    public Map<String, String> deleteGreeting(Long id) {
+        Map<String, String> response = new HashMap<>();
+        Optional<GreetingEntity> existingGreeting = greetingRepository.findById(id);
+
+        if (existingGreeting.isPresent()) {
+            greetingRepository.deleteById(id);
+            response.put("message", "Greeting deleted successfully!");
+        } else {
+            response.put("error", "Greeting not found!");
+        }
+
+        return response;
+    }
 }
